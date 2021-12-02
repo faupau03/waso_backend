@@ -1,6 +1,18 @@
-var pgp = require("pg-promise")(/*options*/);
+const initOptions = {
+    error: function (err, e) {  
+        console.log(err);
+    }
+};
 
 
+var pgp = require("pg-promise")(initOptions);
+
+// For Debugging
+const monitor = require('pg-monitor');
+const sql = require('./sql/sql.js');
+
+
+// Database connection details;
 const cn = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -10,5 +22,9 @@ const cn = {
 }
 console.log(process.env.DB_HOST);
 const db = pgp(cn);
+
+//monitor.attach(initOptions);
+
+db.none(sql.init);
 
 module.exports = db;

@@ -1,26 +1,34 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser')
+var session = require('express-session');
+var SQLiteStore = require('connect-sqlite3')(session);
 
 require('dotenv').config()
 var db = require('./db.js');
 
-var gameRouter = require('./routes/gameRouter');
+
+var gameRouter = require('./routes/game');
+var loginRouter = require('./routes/login');
 
 var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(session({
+  store: new SQLiteStore,
+  secret: process.env.SESSION_SECRET,
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
+}));
 
 
 const api_url = "/api/v1";
 
 app.use(api_url+"/game", gameRouter);
+//app.use(api_url+"/login", loginRouter);
 
 
 // Get API information
