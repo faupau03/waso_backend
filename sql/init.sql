@@ -153,7 +153,7 @@ DO $$
 BEGIN
 	ALTER TABLE ONLY public.user_games
         ADD CONSTRAINT user_games_game_id_fkey FOREIGN KEY (game_id) REFERENCES public.games(id);
-	EXCEPTION WHEN invalid_table_definition THEN
+	EXCEPTION WHEN DUPLICATE_OBJECT THEN
 		RAISE NOTICE 'games contraint exists, skipping...';
 END $$;
 
@@ -169,7 +169,7 @@ DO $$
 BEGIN
 	ALTER TABLE ONLY public.user_games
         ADD CONSTRAINT user_games_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
-	EXCEPTION WHEN invalid_table_definition THEN
+	EXCEPTION WHEN DUPLICATE_OBJECT THEN
 		RAISE NOTICE 'games contraint exists, skipping...';
 END $$;
 
