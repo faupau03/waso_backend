@@ -3,7 +3,7 @@
  * Author: Paul Paffe
  * Purpose: This file contains the authentication functions for the login endpoint. Login or delete a session.
  */
-
+var db = require('../db.js');
 const crypto = require('crypto');
 
 const getHashedPassword = (password) => {
@@ -12,34 +12,31 @@ const getHashedPassword = (password) => {
     return hash;
 }
 
-const generateAuthToken = () => {
+/* const generateAuthToken = () => {
     return crypto.randomBytes(30).toString('hex');
-}
+} */
 
 
-async function create(username, password, email) {
+
+async function login(email, password) {
     const hashedPassword = getHashedPassword(password);
-    const user = await User.findOne({
-        where: {
-            username,
-            password: hashedPassword,
-            email
+    const user = await db.any('SELECT * FROM public.users WHERE email = $1 AND password = $2', [email, hashedPassword]);
+    console.log(user);
+    if (user[0].email === email) {
+        return {
+            id: user[0].id,
+            gid: user[0].group,
+            email: user[0].email,
         }
-    });
-    if (user) {
-        const token = generateAuthToken();
-        await User.update({
-            token
-        }, {
-            where: {
-                username
-            }
-        });
-        return token;
     }
     return null;
 }
 
-async function delete() {
+async function logout() {
+    
+}
 
+module.exports = {
+    login,
+    logout
 }

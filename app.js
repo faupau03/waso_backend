@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser')
+const cors = require('cors');
 var session = require('express-session');
 var SQLiteStore = require('connect-sqlite3')(session);
 
@@ -12,12 +13,18 @@ var db = require('./db.js');
 
 var gameRouter = require('./routes/game');
 var loginRouter = require('./routes/login');
+var userRouter = require('./routes/user');
 
 var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors({
+  // TODO: change this to your own domain if you want to
+  origin: '*'
+}));
+
 app.use(session({
   store: new SQLiteStore,
   secret: process.env.SESSION_SECRET,
@@ -28,7 +35,8 @@ app.use(session({
 const api_url = "/api/v1";
 
 app.use(api_url+"/game", gameRouter);
-//app.use(api_url+"/login", loginRouter);
+app.use(api_url+"/login", loginRouter);
+app.use(api_url+"/user", userRouter);
 
 
 // Get API information
