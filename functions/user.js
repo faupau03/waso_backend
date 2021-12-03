@@ -7,12 +7,12 @@ const getHashedPassword = (password) => {
     return hash;
 }
 
-async function create(username, email, password) {
+async function create(username, email, password, gid) {
     if (!username || !email || !password) {
         throw new Error('Missing parameters');
     }
     const hashedPassword = getHashedPassword(password);
-    const user = await db.one('INSERT INTO public.users (id, name, email, password) VALUES (DEFAULT, $1, $2, $3) RETURNING *', [username, email, hashedPassword]);
+    const user = await db.one('INSERT INTO public.users (id, name, email, password, gid) VALUES (DEFAULT, $1, $2, $3, $4) RETURNING *', [username, email, hashedPassword, gid]);
     if (!user) {
         throw new Error('User not created');
     }

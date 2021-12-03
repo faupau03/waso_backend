@@ -17,7 +17,13 @@ router.post('/', async (req, res, next) => {
     next(createError(400));
   }
 
-  user.create(req.body.username, req.body.email, req.body.password)
+  //Set gid from request 0: admin, 1: user, 2: guest
+  gid = 1;
+  if (req.body.hasOwnProperty('gid') && req.body.gid == 2) {
+    gid = 2;
+  }
+
+  user.create(req.body.username, req.body.email, req.body.password, gid)
     .then(result => {
       res.status(200).json(result);
     })

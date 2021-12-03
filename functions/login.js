@@ -25,7 +25,7 @@ async function login(email, password) {
     if (user[0].email === email) {
         return {
             id: user[0].id,
-            gid: user[0].group,
+            gid: user[0].gid,
             email: user[0].email,
         }
     }
