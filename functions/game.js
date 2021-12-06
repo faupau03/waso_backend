@@ -43,6 +43,11 @@ async function create(name, user, money) {
  * 
  * @param id - id of game (optional) 
  * @function
+ * @description
+    1. If a game is specified, it will get the game data, and the user data associated with that game.
+    2. If no game is specified, it will get all games and all user data associated with each game.
+    3. If a game is specified, and it can't be found, it will throw a 404 error.
+    4. If no game is specified, and there are no games, it will throw a 404 error.
  */
 async function read(id) {
     if (id != null) {
@@ -113,10 +118,17 @@ async function read(id) {
  * Updates a game with request body
  * @author Paul Paffe
  * 
- * @param {Request} req - request object
- * @param {Response} res - response object
- * @param {NextFunction} next - next function
- * @function
+ * @param id - id of game
+ * @param data - data to update
+ * @param money - boolean for if game has money (optional)
+ * @param finished - boolean for if game is finished (optional)
+ * 
+ * @description
+ *  1. Select the game with the given id
+    2. Check if the game is finished (finished == true)
+    3. If the game is finished, calculate the money for each user
+    4. Update the money for each user
+    5. If the game is finished, update the winner
  */
 async function update(id, data, money, finished) {
     try {
