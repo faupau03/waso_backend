@@ -5,8 +5,25 @@ var createError = require('http-errors');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  user.get()
+  .then(function(user) {
+    res.json(user);
+  })
+  .catch(function(err) {
+    next(createError(404, err));
+  });
 });
+
+router.get('/:id', function(req, res, next) {
+  user.get(req.params.id)
+    .then(function(user) {
+      res.json(user);
+    })
+    .catch(function(err) {
+      next(createError(404, err));
+    });
+});
+
 
 router.post('/', async (req, res, next) => {
 
