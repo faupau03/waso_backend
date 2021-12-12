@@ -14,9 +14,20 @@ Installation:
  `git clone https://github.com/faupau03/waso_backend`
  3. Change directory to folder
  `cd waso_backend`
- 4. Install dependencies
+ 4. Create .env file
+ `nano .env`
+ 5. Insert variables
+ ```
+ DB_HOST=YOUR_DATABASE_ADDRESS
+ DB_PORT=5432
+ DB_NAME=waso
+ DB_USER=postgres
+ DB_PASSWORD=YOUR_SECRET_PASSWORD
+ SESSION_SECRET=YOUR_SECRET_SECRET
+ ```
+ 7. Install dependencies
  `npm install`
- 5. Start server
+ 7. Start server
  `npm start`
 
 The docker way:
