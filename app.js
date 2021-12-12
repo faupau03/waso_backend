@@ -28,7 +28,9 @@ app.use(cors({
 app.use(session({
   store: new SQLiteStore,
   secret: process.env.SESSION_SECRET,
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
+  resave: false,
+  saveUninitialized: false
 }));
 
 
