@@ -38,9 +38,8 @@ router.post('/', async (req, res, next) => {
   gid = 1;
   if (req.body.hasOwnProperty('gid') && req.body.gid == 2) {
     gid = 2;
-  }
-
-  user.create(req.body.username, req.body.email, req.body.password, gid)
+    
+    user.create(req.body.username, null, null, gid)
     .then(result => {
       res.status(200).json(result);
     })
@@ -48,6 +47,19 @@ router.post('/', async (req, res, next) => {
       console.log(err);
       next(createError(400));
     });
+  }
+  else {
+    user.create(req.body.username, req.body.email, req.body.password, gid)
+    .then(result => {
+      res.status(200).json(result);
+    })
+    .catch(err => {
+      console.log(err);
+      next(createError(400));
+    });
+  }
+
+  
 });
 
 module.exports = router;
