@@ -99,7 +99,7 @@ COMMENT ON COLUMN public.user_games.status IS '0: dead, 1: playing, 2: won, 3: l
 CREATE TABLE IF NOT EXISTS public.users (
     id SERIAL NOT NULL,
     name character varying,
-    created timestamp with time zone,
+    created timestamp with time zone DEFAULT now(),
     email character varying,
     password character varying,
     gid integer NOT NULL DEFAULT 1
