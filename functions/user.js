@@ -12,7 +12,7 @@ async function create(username, email, password, gid) {
         throw new Error('Missing parameters');
     }
     var user;
-    if (gid == 2) 
+    if (gid == 2) {
         user = await db.one('INSERT INTO public.users (id, name, gid) VALUES (DEFAULT, $1, $2) RETURNING *', [username, gid]);
     }
     else {
