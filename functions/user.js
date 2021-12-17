@@ -8,7 +8,7 @@ const getHashedPassword = (password) => {
 }
 
 async function create(username, email, password, gid) {
-    if (!username || !email || !password) {
+    if ((!username || !email || !password) && gid != 2) {
         throw new Error('Missing parameters');
     }
     const hashedPassword = getHashedPassword(password);
