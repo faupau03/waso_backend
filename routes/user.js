@@ -29,7 +29,7 @@ router.post('/', async (req, res, next) => {
 
   console.log(req.body);
 
-  if (!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('username')) {
+  if ((!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('username')) && (req.body.gid != 2)) {
     console.log(req.body);
     next(createError(400));
   }
@@ -38,6 +38,7 @@ router.post('/', async (req, res, next) => {
   gid = 1;
   if (req.body.hasOwnProperty('gid') && req.body.gid == 2) {
     gid = 2;
+    req.body.password = null;
   }
 
   user.create(req.body.username, req.body.email, req.body.password, gid)
