@@ -16,7 +16,6 @@ async function create(username, email, password, gid) {
         user = await db.one('INSERT INTO public.users (id, name, gid) VALUES (DEFAULT, $1, $2) RETURNING *', [username, gid]);
     }
     else {
-        
         const hashedPassword = getHashedPassword(password);
         user = await db.one('INSERT INTO public.users (id, name, email, password, gid) VALUES (DEFAULT, $1, $2, $3, $4) RETURNING *', [username, email, hashedPassword, gid]);
     }
