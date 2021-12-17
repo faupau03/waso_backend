@@ -38,7 +38,8 @@ router.post('/', async (req, res, next) => {
   gid = 1;
   if (req.body.hasOwnProperty('gid') && req.body.gid == 2) {
     gid = 2;
-    req.body.password = null;
+    req.body.password = "guest";
+    req.body.email = "guest";
   }
 
   user.create(req.body.username, req.body.email, req.body.password, gid)
