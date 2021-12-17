@@ -53,7 +53,7 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE IF NOT EXISTS public.games (
-    id integer NOT NULL,
+    id SERIAL NOT NULL,
     name character varying,
     created timestamp with time zone DEFAULT now(),
     updated timestamp with time zone DEFAULT now(),
@@ -97,7 +97,7 @@ COMMENT ON COLUMN public.user_games.status IS '0: dead, 1: playing, 2: won, 3: l
 --
 
 CREATE TABLE IF NOT EXISTS public.users (
-    id integer NOT NULL,
+    id SERIAL NOT NULL,
     name character varying,
     created timestamp with time zone,
     email character varying,
