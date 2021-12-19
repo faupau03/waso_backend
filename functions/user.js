@@ -11,6 +11,9 @@ async function create(username, email, password, gid) {
     if ((!username || !email || !password) && gid != 2) {
         throw new Error('Missing parameters');
     }
+    else if ((gid == 2) && (!username)) {
+        throw new Error('Username cannot be empty!');
+    }
     var user;
     if (gid == 2) {
         user = await db.one('INSERT INTO public.users (id, name, gid) VALUES (DEFAULT, $1, $2) RETURNING *', [username, gid]);
