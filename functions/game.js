@@ -27,7 +27,7 @@ async function create(name, user, money) {
         const game = await db.any('INSERT INTO games(name,money) VALUES($1,$2) RETURNING id', [name, money]);
 
         for (let i in user) {
-            const user_sql = await db.one('INSERT INTO user_games(game_id,user_id,data) VALUES($1,$2,$3) RETURNING user_id', [game[0].id, user[i], "15"]);
+            const user_sql = await db.one('INSERT INTO user_games(game_id,user_id,data) VALUES($1,$2,$3) RETURNING user_id', [game[0].id, user[i], "{15}"]);
         }
 
         return game[0].id;
@@ -50,6 +50,7 @@ async function create(name, user, money) {
     4. If no game is specified, and there are no games, it will throw a 404 error.
  */
 async function read(id) {
+    //console.log(await db.query('SHOW search_path;'));
     if (id != null) {
         // Get data from one game
         try {
@@ -86,6 +87,7 @@ async function read(id) {
         try {
             // Run query to get games
             const games = await db.any('SELECT * FROM games');
+
             // Iterate through games
             for (let l = 0; l < games.length; l++) {
                 // Run query to get users
@@ -104,7 +106,7 @@ async function read(id) {
                 } else if (games[l].length <= 0) {
                     throw new Error("404");
                 } else {
-                    throw new Error("500");
+                    throw new Error("500 - Error getting games");
                 }
             }
             return games;

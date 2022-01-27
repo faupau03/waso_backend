@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
         next(createError(400));
       }
       else {
-        next(createError(500));
+        next(createError(500, e.message));
       }
     });
 });
@@ -39,7 +39,7 @@ router.get('/:id', async (req, res, next) => {
         next(createError(400));
       }
       else {
-        next(createError(500));
+        next(createError(500, e.message));
       }
     });
 });
