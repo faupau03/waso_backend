@@ -27,7 +27,7 @@ async function create(name, user, money) {
         const game = await db.any('INSERT INTO games(name,money) VALUES($1,$2) RETURNING id', [name, money]);
 
         for (let i in user) {
-            const user_sql = await db.one('INSERT INTO user_games(game_id,user_id,data) VALUES($1,$2,$3) RETURNING user_id', [game[0].id, user[i], 15]);
+            const user_sql = await db.one('INSERT INTO user_games(game_id,user_id,data) VALUES($1,$2,$3) RETURNING user_id', [game[0].id, user[i], "15"]);
         }
 
         return game[0].id;
