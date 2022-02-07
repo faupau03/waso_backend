@@ -1,7 +1,7 @@
 /**
- * File: functions\auth.js
+ * File: functions\login.js
  * Author: Paul Paffe
- * Purpose: This file contains the authentication functions for the login endpoint. Login or delete a session.
+ * Purpose: This file contains the authentication functions for the login endpoint. Create or delete a session.
  */
 var db = require('../db.js');
 const crypto = require('crypto');
