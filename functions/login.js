@@ -22,7 +22,7 @@ async function login(email, password) {
     const hashedPassword = getHashedPassword(password);
     const user = await db.any('SELECT * FROM public.users WHERE email = $1 AND password = $2', [email, hashedPassword]);
     console.log(user);
-    if (!user) {
+    if (!user || !user.length) {
         return null;
     }
     if (user[0].email === email) {
