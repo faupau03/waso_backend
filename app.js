@@ -22,14 +22,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({
   // TODO: change this to your own domain if you want to
-  origin: ['http://localhost:3000','waso.paffnet.de','waso-frontend.paffnet.de'],
+  origin: ['http://localhost:3000','https://waso.paffnet.de','https://waso-frontend.paffnet.de'],
   credentials: true
 }));
 
 app.use(session({
   store: new SQLiteStore,
   secret: process.env.SESSION_SECRET,
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 , sameSite: 'none', secure: false }, // 30 days
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 , sameSite: 'none', secure: true }, // 30 days
   resave: false,
   saveUninitialized: false,
 }));
