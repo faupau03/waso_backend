@@ -5,6 +5,9 @@ var createError = require('http-errors');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  if (!req.session) {
+    next(createError(401, 'Unauthenticated'));
+  }
   user.get()
   .then(function(user) {
     res.json(user);
