@@ -22,7 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({
   // TODO: change this to your own domain if you want to
-  origin: '*'
+  origin: ['http://localhost:3000','waso.paffnet.de','waso-frontend.paffnet.de'],
+  credentials: true
 }));
 
 app.use(session({
