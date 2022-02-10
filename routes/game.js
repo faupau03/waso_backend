@@ -8,6 +8,12 @@ var game = require('../functions/game.js');
 
 //Get /game get all games from database
 router.get('/', async (req, res, next) => {
+
+  //  Check if user is logged in
+  if (!req.session.uid) {
+    next(createError(401, 'Unauthenticated'));
+  }
+
   game.read()
     .then(data => {
       res.json(data);
@@ -27,6 +33,12 @@ router.get('/', async (req, res, next) => {
 
 //Get /game/:id get a game from database
 router.get('/:id', async (req, res, next) => {
+
+  //  Check if user is logged in
+  if (!req.session.uid) {
+    next(createError(401, 'Unauthenticated'));
+  }
+
   game.read(req.params.id)
     .then(data => {
       res.json(data);
@@ -58,6 +70,11 @@ router.get('/:id', async (req, res, next) => {
   }
 */
 router.post('/', async (req, res, next) => {
+
+  //  Check if user is logged in
+  if (!req.session.uid) {
+    next(createError(401, 'Unauthenticated'));
+  }
 
   //  Check if name and user are given
   if (!req.body.hasOwnProperty('user') || (req.body.user.length <= 1) || !req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('money')) {
@@ -104,6 +121,12 @@ router.post('/', async (req, res, next) => {
   }
  */
 router.put('/:id', function (req, res, next) {
+
+  //  Check if user is logged in
+  if (!req.session.uid) {
+    next(createError(401, 'Unauthenticated'));
+  }
+
   var finished = false;
 
   //  Check if id and data is given
@@ -141,6 +164,12 @@ router.put('/:id', function (req, res, next) {
 
 //Delete /game/:id delete a game from database
 router.delete('/:id', function (req, res, next) {
+
+  //  Check if user is logged in
+  if (!req.session.uid) {
+    next(createError(401, 'Unauthenticated'));
+  }
+
   //  Check if id is given
   if (req.params.id) {
     //  Run delete function

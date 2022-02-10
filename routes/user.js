@@ -5,7 +5,9 @@ var createError = require('http-errors');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  if (!req.session) {
+
+  //  Check if user is logged in
+  if (!req.session.uid) {
     next(createError(401, 'Unauthenticated'));
   }
   user.get()
@@ -18,6 +20,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
+  
+  //  Check if user is logged in
+  if (!req.session.uid) {
+    next(createError(401, 'Unauthenticated'));
+  }
+
   user.get(req.params.id)
     .then(function(user) {
       res.json(user);
@@ -30,7 +38,10 @@ router.get('/:id', function(req, res, next) {
 
 router.post('/', async (req, res, next) => {
 
-  console.log(req.body);
+  //  Check if user is logged in
+  if (!req.session.uid) {
+    next(createError(401, 'Unauthenticated'));
+  }
 
   if ((!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('username')) && (req.body.gid != 2)) {
     console.log(req.body);
