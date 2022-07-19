@@ -37,11 +37,7 @@ router.get('/:id', function(req, res, next) {
 
 
 router.post('/', async (req, res, next) => {
-
-  //  Check if user is logged in
-  if (!req.session.uid) {
-    next(createError(401, 'Unauthenticated'));
-  }
+  
 
   if ((!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('username')) && (req.body.gid != 2)) {
     console.log(req.body);
@@ -51,6 +47,12 @@ router.post('/', async (req, res, next) => {
   //Set gid from request 0: admin, 1: user, 2: guest
   gid = 1;
   if (req.body.hasOwnProperty('gid') && req.body.gid == 2) {
+    // Create guest account
+    
+    //  Check if user is logged in
+    if (!req.session.uid) {
+      next(createError(401, 'Unauthenticated'));
+    }
     gid = 2;
     
     user.create(req.body.username, null, null, gid)
@@ -63,6 +65,7 @@ router.post('/', async (req, res, next) => {
     });
   }
   else {
+    // Registration
     user.create(req.body.username, req.body.email, req.body.password, gid)
     .then(result => {
       res.status(200).json(result);
