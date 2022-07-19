@@ -34,6 +34,19 @@ app.use(session({
   saveUninitialized: false,
 }));
 
+// Serve frontend from subfolder waso_frontend
+const frontend_dir = "./waso_frontend/"
+app.use(express.static(frontend_dir + 'dist'));
+
+app.get('/', (req, res) => {
+    res.sendFile(frontend_dir + 'dist/index.html')
+})
+app.get('/user', (req, res) => {
+    res.sendFile(frontend_dir + 'dist/index.html')
+})
+app.get('/game', (req, res) => {
+    res.sendFile(frontend_dir + 'dist/index.html')
+})
 
 const api_url = "/api/v1";
 
