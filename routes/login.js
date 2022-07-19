@@ -9,7 +9,7 @@ var login = require('../functions/login.js');
 router.post('/', async (req, res, next) => {
 
   //  Check if name and user are given
-  if (!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password')) {
+  if (!req.hasOwnProperty('body') || !req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password')) {
     console.log('Missing email or password');
     next(createError(400));
   }
